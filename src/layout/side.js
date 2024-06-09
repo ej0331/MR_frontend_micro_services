@@ -27,6 +27,9 @@ const SideComponent = () => {
         })
       }
     } catch (error) {
+      setHealthDict((prevHealthDict) => {
+        return { ...prevHealthDict, "學生練習": false };
+      })
       console.error("Error fetching class health check:", error);
     }
   };
@@ -40,6 +43,9 @@ const SideComponent = () => {
         })
       }
     } catch (error) {
+      setHealthDict((prevHealthDict) => {
+        return { ...prevHealthDict, "學生測驗": false };
+      })
       console.error("Error fetching class health check:", error);
     }
   };
@@ -54,6 +60,9 @@ const SideComponent = () => {
       }
     } catch (error) {
       console.error("Error fetching class health check:", error);
+      setHealthDict((prevHealthDict) => {
+        return { ...prevHealthDict, "班級管理": false };
+      })
     }
   };
 
@@ -67,6 +76,9 @@ const SideComponent = () => {
       }
     } catch (error) {
       console.error("Error fetching student health check:", error);
+      setHealthDict((prevHealthDict) => {
+        return { ...prevHealthDict, "學生帳號": false };
+      })
     }
   };
 
@@ -75,7 +87,8 @@ const SideComponent = () => {
     checkQuantityLimitedTestHealth()
     checkClassHealth()
     checkStudentIsHealth()
-  }, [])
+    console.log(healthDict);
+  }, [location])
 
   const menuItems = [
     {
