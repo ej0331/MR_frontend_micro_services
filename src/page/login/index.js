@@ -1,13 +1,89 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import image from "../../config/image";
 import { TeacherLogin } from "../../api/API";
 import { useNavigate } from "react-router-dom";
-import { data } from "autoprefixer";
+import { studentHealthCheck } from "../../api/account";
+import { classHealthCheck } from "../../api/class";
+import { quantityLimitedPracticeHealthCheck } from "../../api/quantityLimitedPractice";
+import { quantityLimitedTestHealthCheck } from "../../api/quantityLimitedTest";
 
 function Login() {
   const navigate = useNavigate();
+
+  const [healthDict, setHealthDict] = useState({
+    "學生練習": false,
+    "學生測驗": false,
+    "學生帳號": false,
+    "班級管理": false,
+  })
+
+  const paths = {
+    "學生練習": "/home",
+    "學生測驗": "/test",
+    "學生帳號": "/account",
+    "班級管理": "/class",
+  };
+
+  const checkQuantityLimitedPracticeHealth = async () => {
+    try {
+      const status = await quantityLimitedPracticeHealthCheck();
+      if (status === 200) {
+        setHealthDict((prevHealthDict) => {
+          return { ...prevHealthDict, "學生練習": true };
+        })
+      }
+    } catch (error) {
+      console.error("Error fetching class health check:", error);
+    }
+  };
+
+  const checkQuantityLimitedTestHealth = async () => {
+    try {
+      const status = await quantityLimitedTestHealthCheck();
+      if (status === 200) {
+        setHealthDict((prevHealthDict) => {
+          return { ...prevHealthDict, "學生測驗": true };
+        })
+      }
+    } catch (error) {
+      console.error("Error fetching class health check:", error);
+    }
+  };
+
+  const checkStudentIsHealth = async () => {
+    try {
+      const status = await studentHealthCheck();
+      if (status === 200) {
+        setHealthDict((prevHealthDict) => {
+          return { ...prevHealthDict, "學生帳號": true };
+        })
+      }
+    } catch (error) {
+      console.error("Error fetching student health check:", error);
+    }
+  };
+
+  const checkClassHealth = async () => {
+    try {
+      const status = await classHealthCheck();
+      if (status === 200) {
+        setHealthDict((prevHealthDict) => {
+          return { ...prevHealthDict, "班級管理": true };
+        })
+      }
+    } catch (error) {
+      console.error("Error fetching class health check:", error);
+    }
+  };
+
+  useEffect(() => {
+    checkQuantityLimitedPracticeHealth()
+    checkQuantityLimitedTestHealth()
+    checkStudentIsHealth()
+    checkClassHealth()
+  }, [])
 
   const LoginSchema = Yup.object().shape({
     account: Yup.string()
@@ -29,7 +105,12 @@ function Login() {
       try {
         const userData = await TeacherLogin(values.account, values.password);
         localStorage.setItem('user', JSON.stringify(userData));
-        navigate("/home");
+        for (const [key, path] of Object.entries(paths)) {
+          if (healthDict[key]) {
+            navigate(path);
+            break;
+          }
+        }
       } catch (error) {
         if (error.name === "ValidationError") {
           error.inner.forEach((validationError) => {
