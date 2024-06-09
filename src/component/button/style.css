@@ -1,0 +1,90 @@
+.modal{
+    padding: 4px 35px !important;
+}
+/*下載*/
+.download {
+    padding: 4px 15px;
+    background-color: #7392B7;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+/*刪除*/
+.delete {
+    padding: 4px 15px;
+    background-color: #EA0000;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.delete:hover {
+    background-color: #c30000;
+}
+
+/*新增*/
+.insert {
+    padding: 4px 15px;
+    background-color: #01B468;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.insert:hover {
+    background-color: #009457;
+}
+
+.none-inser{
+    padding: 4px 15px;
+    background-color: #739989;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+}
+/*修改*/
+.update {
+    padding: 4px 15px;
+    background-color: #FFD306;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+
+}
+
+.update:hover {
+    background-color: #ddb500;
+}
+
+/*查詢*/
+.search {
+    padding: 4px 15px;
+    background-color: #4C77AA;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.search:hover {
+    background-color: #426795;
+}
+/*取消*/
+.cancel {
+    padding: 4px 15px;
+    background-color: #696969;
+    color: white;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.cancel:hover {
+    background-color: #414141;
+}
