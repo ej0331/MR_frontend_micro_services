@@ -1,21 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { studentHealthCheck } from "../api/account";
 import { classHealthCheck } from "../api/class";
+import { quantityLimitedPracticeHealthCheck } from "../api/quantityLimitedPractice";
+import { quantityLimitedTestHealthCheck } from "../api/quantityLimitedTest";
 import { Link, useLocation } from "react-router-dom";
 import HeaderComponent from "./header";
 import { Tooltip, Button } from "@material-tailwind/react";
 import "./style.css";
 
 const SideComponent = () => {
+  const location = useLocation();
+
   const [healthDict, setHealthDict] = useState({
     "學生練習": false,
     "學生測驗": false,
     "學生帳號": false,
     "班級管理": false,
   })
-  const location = useLocation();
 
-  const checkisClassHealth = async () => {
+  const checkQuantityLimitedPracticeHealth = async () => {
+    try {
+      const status = await quantityLimitedPracticeHealthCheck();
+      if (status === 200) {
+        setHealthDict((prevHealthDict) => {
+          return { ...prevHealthDict, "學生練習": true };
+        })
+      }
+    } catch (error) {
+      console.error("Error fetching class health check:", error);
+    }
+  };
+
+  const checkQuantityLimitedTestHealth = async () => {
+    try {
+      const status = await quantityLimitedTestHealthCheck();
+      if (status === 200) {
+        setHealthDict((prevHealthDict) => {
+          return { ...prevHealthDict, "學生測驗": true };
+        })
+      }
+    } catch (error) {
+      console.error("Error fetching class health check:", error);
+    }
+  };
+
+  const checkClassHealth = async () => {
     try {
       const status = await classHealthCheck();
       if (status === 200) {
@@ -42,7 +71,9 @@ const SideComponent = () => {
   };
 
   useEffect(() => {
-    checkisClassHealth()
+    checkQuantityLimitedPracticeHealth()
+    checkQuantityLimitedTestHealth()
+    checkClassHealth()
     checkStudentIsHealth()
   }, [])
 

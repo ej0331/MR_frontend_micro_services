@@ -5,6 +5,11 @@ export const userRequest = axios.create({
   withCredentials: true
 });
 
+export const recordRequest = axios.create({
+  baseURL: `http://${process.env.REACT_APP_RECORD_DOMAIN}/api`,
+  withCredentials: true
+});
+
 //login
 export const TeacherLogin = async (account, password) => {
   try {

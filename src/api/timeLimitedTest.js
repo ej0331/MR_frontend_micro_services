@@ -1,4 +1,4 @@
-import { userRequest } from "./API";
+import { recordRequest } from "./API";
 
 const baseUrl = '/time_limited_tests';
 
@@ -42,7 +42,7 @@ export const getTimeLimitedTestList = (
     }
   
     const queryString = queryParams.join("&");
-    return userRequest.get(`${baseUrl}?${queryString}`);
+    return recordRequest.get(`${baseUrl}?${queryString}`);
 };
 
 export const getTimeLimitedTestChartData = (user_id, startDate, endDate) => {
@@ -53,5 +53,5 @@ export const getTimeLimitedTestChartData = (user_id, startDate, endDate) => {
     }
 
     const queryString = queryParams.join('&');
-    return userRequest.get(`${baseUrl}/chart/users/${user_id}?${queryString}`);
+    return recordRequest.get(`${baseUrl}/chart/users/${user_id}?${queryString}`);
 };

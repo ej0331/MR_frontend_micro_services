@@ -1,4 +1,14 @@
-import { userRequest } from "./API";
+import { recordRequest } from "./API";
+
+export const quantityLimitedTestHealthCheck = async () => {
+  try {
+    const res = await recordRequest.get("/quantity_limited_tests/health-check");
+    return res.status;
+  } catch (error) {
+    console.error("Error fetching healthcheck:", error);
+    throw error;
+  }
+};
 
 export const getQuantityLimitedTestList = (
     classes,
@@ -40,7 +50,7 @@ export const getQuantityLimitedTestList = (
     }
   
     const queryString = queryParams.join("&");
-    return userRequest.get(`/quantity_limited_tests?${queryString}`);
+    return recordRequest.get(`/quantity_limited_tests?${queryString}`);
 };
 
 export const getQuantityLimitedTestChartData = (user_id, startDate, endDate) => {
@@ -51,5 +61,5 @@ export const getQuantityLimitedTestChartData = (user_id, startDate, endDate) => 
     }
 
     const queryString = queryParams.join('&');
-    return userRequest.get(`/quantity_limited_tests/chart/users/${user_id}?${queryString}`);
+    return recordRequest.get(`/quantity_limited_tests/chart/users/${user_id}?${queryString}`);
 };
