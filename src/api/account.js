@@ -1,5 +1,15 @@
 import { userRequest } from "./API";
 
+export const studentHealthCheck = async () => {
+  try {
+    const res = await userRequest.get("/students/health-check");
+    return res.status;
+  } catch (error) {
+    console.error("Error fetching healthcheck:", error);
+    throw error;
+  }
+};
+
 export const students = (classes, name, account) => {
   const queryParams = [];
   if (classes) {

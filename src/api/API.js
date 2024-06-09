@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const userRequest = axios.create({
-  baseURL: `http://${process.env.REACT_APP_DOMAIN}/api`,
+  baseURL: `http://${process.env.REACT_APP_USER_DOMAIN}/api`,
   withCredentials: true
 });
 

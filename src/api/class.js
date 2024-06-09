@@ -1,5 +1,16 @@
 import { userRequest } from "./API";
 
+
+export const classHealthCheck = async () => {
+  try {
+    const res = await userRequest.get("/classes/health-check");
+    return res.status;
+  } catch (error) {
+    console.error("Error fetching healthcheck:", error);
+    throw error;
+  }
+};
+
 export const classes = async () => {
   try {
     const res = await userRequest.get("/classes");
